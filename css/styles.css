@@ -1,0 +1,225 @@
+/*===========================
+Fonts
+===========================*/
+@font-face {
+  font-family: Comfortaa;
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/Comfortaa/Comfortaa-Regular.ttf');
+}
+
+
+/*===========================
+Global
+===========================*/
+body {
+  background-color: #000 !important;
+  text-transform: none;
+  margin: 20px 0 0 0;
+}
+
+
+.ui-page-theme-a, 
+.ui-panel-wrapper {
+  background-color: #000;
+  border-color: #bbb;
+  color: #fff;
+  text-shadow: none;
+}
+
+.ui-body-a,
+.ui-body-c {
+  background: #000;
+  text-shadow: none;
+  color: #ccc;
+  font-family: Arvo;
+}
+
+a, a:hover, a:visited {
+  text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.adviceText {
+  cursor: pointer;
+}
+
+
+
+/*===========================
+Preloader
+===========================*/
+#preloadWrapper {
+  opacity: 0;
+  text-align: center;
+}
+
+#meter {
+  width: 200px;
+  max-width: 65%;
+  height: 20px;
+  position: relative;
+  margin: 10px auto 0 auto;
+  padding: 5px;
+  overflow: hidden;
+}
+
+#meter .block {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+}
+
+/*===========================
+Home Screen
+===========================*/
+#home {
+  background-repeat: no-repeat;
+}
+
+/* iPhone with no retina display */
+@media screen {
+  #home {
+    background-image: url(../img/login.png);
+    background-position: center center;
+  }
+}
+
+
+
+/*===========================
+Icons
+===========================*/
+/* FontAwesome Icons */
+i {
+  color: #666;
+  opacity: 0.5;
+}
+#infoIcon {
+  font-size: 25px;
+  display: none;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+#twitterIcon {
+  top: 0;
+  left: 0;  
+  font-size: 25px;
+  padding: 20px;
+  position: absolute;
+  cursor: pointer;
+}
+
+/*===========================
+Advice
+===========================*/
+#adviceMain,
+#adviceMainContent,
+#adviceWrapper {
+  padding: 0;
+  margin: 0;
+}
+
+#vision {
+  display: none;
+}
+
+/*.ui-btn-active { 
+  text-shadow: none;
+  background: #333;
+  border-color: transparent;
+}
+*/
+
+/*-----------------------------------------------------------------------------------*/
+/*  Style: Default
+/*-----------------------------------------------------------------------------------*/
+.defaultWrapper {
+  margin-top: 70px;
+}
+
+.adviceText {
+  text-align: center;
+  text-shadow: none;
+  display: inline-block;
+  max-width: 70%;
+  padding: 10px;
+}
+
+.fontComfortaa {
+  font-family: Comfortaa, Helvetica, Verdana, Sans-Serif;
+  font-size: 20px;
+  color: #999;
+}
+
+
+
+/*===========================
+Info + Error
+===========================*/
+#infoContent, #errorContent, #rateLimitContent {
+  font-family: Comfortaa, Helvetica, Verdana, Sans-Serif;
+  font-size: 17px;
+  color: #999;
+  line-height: 23px;
+  margin: 60px 60px 20px 60px;
+}
+
+#infoContent h4,
+#errorContent h4 {
+  font-size: 23px;
+  color: #33ccff;
+  margin: 0;
+}
+
+#reconnectBtn {
+  margin-top: 30px;
+  text-align: center;
+}
+
+#reconnectBtn a i,
+#reconnectBtn a i:visited {
+  font-size: 20px;
+  color: #33ccff;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+#reconnectBtn a, 
+#reconnectBtn a:visited {
+  color: #ccc;
+  font-size: 12px;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+#reconnectBtn a {
+  background-color: #333;
+  -webkit-border-radius: 4px;
+  display: inline-block;
+  padding: 4px 12px;
+  line-height: 30px;
+}
+
+#reconnectBtn a:active {
+  opacity: 0.6;
+}
+
+
+
+/*===========================
+iAd Adjustments
+===========================*/
+/* Apply to all footers and to #settingsContent */
+.iadAdjustment {
+  margin-bottom: 32px;
+}

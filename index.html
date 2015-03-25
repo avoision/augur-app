@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
+        <title>augur</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css" />
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.css" />
+        <link rel="stylesheet" type="text/css" href="css/styles.css" />
+
+        <!--script type="text/javascript" src="phonegap.js"></script-->
+
+
+        <script type='text/javascript' src='js/fastclick.js'></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="js/underscore-min.js"></script>
+                
+        <!-- Augur Code -->
+        <script type="text/javascript" charset="utf-8" src="js/augurApp.js"></script>
+
+    </head>
+    <body>
+
+        <!-- Home Screen -->
+        <div data-role="page" id="home">
+            <div data-role="content"></div>
+        </div>
+
+        <!-- ERROR -->
+        <div data-role="page" id="connectionErrorScreen">
+            <div data-role="content" id="errorContent">
+                
+                <div id="connectionError">
+                    <h4>The Internet is Missing!</h4>
+
+                    <p>Augur requires an Internet connection in order to prophesy. Guess you could've seen that one coming.</p>
+
+                    <div id="reconnectBtn">
+                        <a class="btn" onclick="recheckConnection()">
+                            <i class="icon-refresh"></i> Reconnect
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADVICE MAIN -->
+        <div data-role="page" id="adviceMain">
+            <div data-role="content" id="adviceMainContent">
+                <div id="preloadWrapper">
+                    <div class="adviceText fontComfortaa"></div>
+                    <div id="meter">
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="block"></div>
+                        <div class="block"></div>
+                    </div>
+                </div>
+                <div id="infoIcon"><a href="#info"><i class="fa fa-info-circle"></i></a></div>
+                <div id="adviceWrapper">
+                    <div class="defaultWrapper">
+                        <div id="vision" class="adviceText fontComfortaa">123123</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div data-role="page" id="info">
+            <div data-role="content" id="infoContent">
+                <div id="twitterIcon"><a href="#adviceMain"><i class="fa fa-twitter"></i></a></div>
+                <div>
+                    <h4>Augur: Past</h4>
+
+                    <p>In Roman times, an augur was a priest who interpreted the will of the gods by studying the flight of birds. An early form of divination, interpretations varied depending on the number of birds, the noises made, and the direction of travel.</p>
+                    
+                    <p>The ceremony and function of the augur was central to any major undertaking in Roman society — public or private — including matters of war, commerce, and religion.</p>
+
+                    <h4>Augur: Present</h4>
+
+                    <p>The Augur app looks to the Internet, pulling in random tweets from a growing list of phrases and search terms. Augur attempts to distill the ramblings of the world at large into a kind of crude, advice-dispensing, fortune-telling machine.</p>
+                    <p>Sometimes an oracle, sometimes a drunk advice columnist, the Augur app is your way to tap into the collective counsel of millions of Twitter users. And probably only a very small number of those people are actually psychopaths.</p>
+
+                    <p>What better wisdom is there, than the wisdom of the Internet at large? Somewhere, behind all the typos, vulgarity, and terrible, terrible grammatical mistakes... the future awaits.</p>
+
+                    <h4>About the Author</h4>
+                    <p>Felix Jung lives in Chicago with his wife Liz, and two rabbits named Phineas and Professor Snugglesworth. He has a lot of silly ideas, some of which he turns into projects.</p>
+                    <p>In his spare time he runs <a href="#" onclick="window.open('http://avoision.com', '_system');">avoision.com</a>, a personal blog he's been updating every day since July, 2002.</p>
+                </div>
+            </div>
+        </div>   
+    </body>
+</html>
