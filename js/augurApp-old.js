@@ -82,8 +82,8 @@ var oauth,
     wisdomView,
     wisdomCollection;
 
-    options.consumerKey = atob('QUxQcXRIb2JsT3V5ZlEySDV3T3ozdEtoYw==');
-    options.consumerSecret= atob('a3Y2aXRpUm5sWlUxbUU0Z2pXU3hWa0FmekJOczVHSG1ZTUdUMGo5NWZIN2dHN2Yzekk=');
+    options.consumerKey = atob('');
+    options.consumerSecret= atob('');
 
 if (isTest) {
     options.callbackUrl = 'https://api.twitter.com';
