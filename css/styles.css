@@ -8,7 +8,6 @@ Fonts
   src: url('../fonts/Comfortaa/Comfortaa-Regular.ttf');
 }
 
-
 /*===========================
 Global
 ===========================*/
@@ -212,14 +211,4 @@ Info + Error
 
 #reconnectBtn a:active {
   opacity: 0.6;
-}
-
-
-
-/*===========================
-iAd Adjustments
-===========================*/
-/* Apply to all footers and to #settingsContent */
-.iadAdjustment {
-  margin-bottom: 32px;
 }

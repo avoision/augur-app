@@ -4,28 +4,13 @@
 var appInit = true,
     clickable = false,
     isTest = false,
-    hasAds = false,
     visionsURL = "https://s3-us-west-2.amazonaws.com/avoision-augur/visions.json",
     visions = [];
-
-var iadHeight = 0;
-
-if (hasAds) {
-    iadHeight = 32;
-};
 
 // ===========================
 // Init
 // ===========================
 $(document).ready(function() {
-
-    // Adjustments for iAd
-    if (hasAds) {
-        $('.footer').addClass('iadAdjustment');
-    }
-
-
-
     // Set click functionality
     $('#vision').click(function() {
         showNextVision();
@@ -42,11 +27,7 @@ function onDeviceReady() {
     navigator.splashscreen.hide();
 
     if (checkConnection()) {
-        
         $.mobile.changePage($('#preload'));
-        // preLoaderM.reset();
-        // preLoaderV.reset();
-       
     } else {
         $.mobile.changePage($('#connectionErrorScreen'));
     }
@@ -87,9 +68,30 @@ $(document).on( "pageshow", "#home", function() {
 $(document).on( "pageshow", "#adviceMain", function() {
     if (appInit) {
         appInit = false;
-        selectPreloaderText();
+        checkforVisions();
     };
 });
+
+checkforVisions = function() {
+    var localVisions = localStorage.getItem('visions');
+
+    if (localVisions != null) {
+        visions = JSON.parse(localVisions);
+        clickable = true;
+        showNextVision();
+        showInfoIcon();
+
+    } else {
+        selectPreloaderText();
+    }
+};
+
+
+
+
+
+
+
 
 
 selectPreloaderText = function() {
@@ -124,8 +126,7 @@ selectPreloaderText = function() {
     var preloadBlock = $('#preloadWrapper .adviceText');
     preloadBlock.html(preloaderText);
 
-    centerPreloader();
-    
+    centerPreloader();    
 }
 
 
@@ -133,12 +134,8 @@ centerPreloader = function() {
     $('#preloadWrapper').css('opacity', 0.01);
     var preloadBlock = $('#preloadWrapper');
     var deviceWidth = window.innerWidth;
-
-    if (hasAds) {
-        var deviceHeight = window.innerHeight - iadHeight;
-    } else {
-        var deviceHeight = window.innerHeight;
-    }      
+    var deviceHeight = window.innerHeight;
+  
 
     var preloadWidth = preloadBlock.width();
     var preloadHeight = preloadBlock.height() + 20; // Height + Padding of meter
@@ -160,13 +157,16 @@ getVisionsData = function() {
     visions = [];
 
     $.getJSON( visionsURL, function( data ) {
-        console.log('>>> Data received!');
+        // console.log('>>> Data received!');
         $.each( data, function( i, item ) {
             visions.push(data[i].tweet);
         });
 
         // Randomize it up!
         visions = _.shuffle(visions);
+
+        // Save to LS
+        localStorage.setItem('visions', JSON.stringify(visions));
         fadePreloader();
     });
 };
@@ -206,30 +206,41 @@ showNextVision = function() {
         return;
     };
 
+
     if (visions.length > 0) {
         $('#vision').fadeTo(500, 0, function() {
             $('#vision').html(visions[0]);
             centerAdvice();
             $('#vision').fadeTo(500, 1, function() {
                 visions.shift();
+
+                // Save to LocalStorage at intervals
+                if (visions.length > 100) {
+                    if ((visions.length % 5) == 0) {
+                        localStorage.setItem('visions', JSON.stringify(visions));
+                    };
+                } else {
+                    localStorage.setItem('visions', JSON.stringify(visions));
+                };
+
                 clickable = true;
-            });            
-        })
+            });
+        });
     } else {
-        alert("no more visions!");
-    }
+        // No more visions
+        $('#infoIcon').fadeOut(500);
+        $('#vision').fadeTo(500, 0, function() {
+            clickable = false;
+            selectPreloaderText();
+        });
+    };
 };
 
 
 centerAdvice = function() {
     var adviceText = $('#vision');
     var deviceWidth = window.innerWidth;
-
-    if (hasAds) {
-        var deviceHeight = window.innerHeight - iadHeight;
-    } else {
-        var deviceHeight = window.innerHeight;
-    }
+    var deviceHeight = window.innerHeight;
 
     var adviceWidth = adviceText.width();
     var adviceHeight = adviceText.height();
