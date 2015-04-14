@@ -17,7 +17,6 @@ body {
   margin: 20px 0 0 0;
 }
 
-
 .ui-page-theme-a, 
 .ui-panel-wrapper {
   background-color: #000;
@@ -47,12 +46,11 @@ a, a:hover, a:visited {
 }
 
 
-
 /*===========================
 Preloader
 ===========================*/
 #preloadWrapper {
-  opacity: 0;
+  display: none;
   text-align: center;
 }
 
@@ -66,13 +64,41 @@ Preloader
   overflow: hidden;
 }
 
+@keyframes pulse {
+  60%  { background-color: #33ccff; }
+}
+@-webkit-keyframes pulse {
+  60%  { background-color: #33ccff; }
+}
+
 #meter .block {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   margin: 0 5px;
-  border: 1px solid #ccc;
 }
+
+.pulse1 {
+  animation: pulse 1500ms 100ms infinite ease-out; 
+  -webkit-animation: pulse 1500ms 100ms infinite ease-out;
+}
+.pulse2 {
+  animation: pulse 1500ms 200ms infinite ease-out; 
+  -webkit-animation: pulse 1500ms 200ms infinite ease-out;
+}
+.pulse3 {
+  animation: pulse 1500ms 300ms infinite ease-out; 
+  -webkit-animation: pulse 1500ms 300ms infinite ease-out;
+}
+.pulse4 {
+  animation: pulse 1500ms 400ms infinite ease-out; 
+  -webkit-animation: pulse 1500ms 400ms infinite ease-out;
+}
+.pulse5 {
+  animation: pulse 1500ms 500ms infinite ease-out; 
+  -webkit-animation: pulse 1500ms 500ms infinite ease-out;
+}
+
 
 /*===========================
 Home Screen
@@ -88,7 +114,6 @@ Home Screen
     background-position: center center;
   }
 }
-
 
 
 /*===========================
@@ -118,6 +143,7 @@ i {
   cursor: pointer;
 }
 
+
 /*===========================
 Advice
 ===========================*/
@@ -132,16 +158,10 @@ Advice
   display: none;
 }
 
-/*.ui-btn-active { 
-  text-shadow: none;
-  background: #333;
-  border-color: transparent;
-}
-*/
 
-/*-----------------------------------------------------------------------------------*/
-/*  Style: Default
-/*-----------------------------------------------------------------------------------*/
+/*===========================
+Style: Default
+===========================*/
 .defaultWrapper {
   margin-top: 70px;
 }
@@ -159,7 +179,6 @@ Advice
   font-size: 20px;
   color: #999;
 }
-
 
 
 /*===========================

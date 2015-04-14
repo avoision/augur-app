@@ -5,6 +5,8 @@ var appInit = true,
     clickable = false,
     isTest = false,
     visionsURL = "https://s3-us-west-2.amazonaws.com/avoision-augur/visions.json",
+    meterPadding = 20,
+    visionPadding = 20,
     visions = [];
 
 // ===========================
@@ -16,34 +18,32 @@ $(document).ready(function() {
         showNextVision();
     });
 
-    // $.mobile.changePage($('#first'));
-    // document.addEventListener("deviceready", onDeviceReady, false);
+    document.addEventListener("deviceready", onDeviceReady, false);
 });
-
 
 // Device Ready           
 function onDeviceReady() {
-    console.log('ready');
+    $(window).bind('orientationchange', orientationChange);
     navigator.splashscreen.hide();
 
     if (checkConnection()) {
-        $.mobile.changePage($('#preload'));
+        $.mobile.changePage($('#adviceMain'));
+
     } else {
         $.mobile.changePage($('#connectionErrorScreen'));
     }
 };
 
-
 function checkConnection() {
     var networkState = navigator.connection.type;
 
     if (networkState !== 'none') {
+        console.log('connected');
         return true;
     } else {
         return false;
     }
 };
-
 
 function recheckConnection() {
     if (checkConnection()) {
@@ -53,19 +53,21 @@ function recheckConnection() {
 
 
 // ===========================
-// Home Screen
+// Orientation
 // ===========================
-// On arriving at first screen
-$(document).on( "pageshow", "#home", function() {
-    $.mobile.changePage($('#adviceMain'));
-});
-
+function orientationChange(e) {
+    if (e.orientation) {    
+        centerAdvice();
+        centerPreloader(false);
+    };
+};
 
 // ===========================
 // Advice Main: Preloader
 // ===========================
 // On arriving at adviceMain screen
 $(document).on( "pageshow", "#adviceMain", function() {
+    console.log('arrived at adviceMain');
     if (appInit) {
         appInit = false;
         checkforVisions();
@@ -77,6 +79,8 @@ checkforVisions = function() {
 
     if (localVisions != null) {
         visions = JSON.parse(localVisions);
+        console.log(visions.length);
+
         clickable = true;
         showNextVision();
         showInfoIcon();
@@ -85,14 +89,6 @@ checkforVisions = function() {
         selectPreloaderText();
     }
 };
-
-
-
-
-
-
-
-
 
 selectPreloaderText = function() {
     var preloaderArray = [
@@ -126,25 +122,24 @@ selectPreloaderText = function() {
     var preloadBlock = $('#preloadWrapper .adviceText');
     preloadBlock.html(preloaderText);
 
-    centerPreloader();    
+    centerPreloader(true);    
 }
 
-
-centerPreloader = function() {
+centerPreloader = function(triggerReveal) {
     $('#preloadWrapper').css('opacity', 0.01);
     var preloadBlock = $('#preloadWrapper');
     var deviceWidth = window.innerWidth;
     var deviceHeight = window.innerHeight;
-  
 
     var preloadWidth = preloadBlock.width();
-    var preloadHeight = preloadBlock.height() + 20; // Height + Padding of meter
+    var preloadHeight = preloadBlock.height(); // Height + Padding of meter
 
     preloadBlock.css('margin-top', (deviceHeight/2) - (preloadHeight/2));
 
-    revealPreloader();
+    if (triggerReveal) {
+        revealPreloader();
+    };
 };
-
 
 revealPreloader = function() {
     $('#preloadWrapper').fadeTo(200, 1, function() {
@@ -152,28 +147,31 @@ revealPreloader = function() {
     });
 };
 
-
 getVisionsData = function() {
     visions = [];
 
-    $.getJSON( visionsURL, function( data ) {
-        // console.log('>>> Data received!');
-        $.each( data, function( i, item ) {
-            visions.push(data[i].tweet);
+    if (checkConnection()) {
+        $.getJSON( visionsURL, function( data ) {
+            // console.log('>>> Data received!');
+            $.each( data, function( i, item ) {
+                visions.push(data[i].tweet);
+            });
+
+            // Randomize it up!
+            visions = _.shuffle(visions);
+
+            // Save to LS
+            localStorage.setItem('visions', JSON.stringify(visions));
+            fadePreloader();
         });
-
-        // Randomize it up!
-        visions = _.shuffle(visions);
-
-        // Save to LS
-        localStorage.setItem('visions', JSON.stringify(visions));
-        fadePreloader();
-    });
+    } else {
+        $.mobile.changePage($('#connectionErrorScreen'));
+    };
 };
-
 
 fadePreloader = function()  {
     $('#preloadWrapper').fadeOut(550, function() {
+        $(this).hide();
         clickable = true;
         showNextVision();
         showInfoIcon();
@@ -189,13 +187,6 @@ showInfoIcon = function() {
 };
 
 
-
-
-
-
-
-
-
 // ===========================
 // Advice Main: Visions
 // ===========================
@@ -205,7 +196,6 @@ showNextVision = function() {
     } else {
         return;
     };
-
 
     if (visions.length > 0) {
         $('#vision').fadeTo(500, 0, function() {
@@ -230,12 +220,12 @@ showNextVision = function() {
         // No more visions
         $('#infoIcon').fadeOut(500);
         $('#vision').fadeTo(500, 0, function() {
+            $(this).hide();
             clickable = false;
             selectPreloaderText();
         });
     };
 };
-
 
 centerAdvice = function() {
     var adviceText = $('#vision');
@@ -243,10 +233,10 @@ centerAdvice = function() {
     var deviceHeight = window.innerHeight;
 
     var adviceWidth = adviceText.width();
-    var adviceHeight = adviceText.height();
+    var adviceHeight = adviceText.height() + visionPadding;
 
     adviceText.css('margin-top', (deviceHeight/2) - (adviceHeight/2));
-    adviceText.css('margin-left', (deviceWidth/2) - (adviceWidth/2));        
+    adviceText.css('margin-left', (deviceWidth/2) - (adviceWidth/2));
 };
 
 
@@ -256,11 +246,3 @@ centerAdvice = function() {
 $(document).on( "pageshow", "#info", function() {
    $('#twitterIcon').fadeIn(500);
 });
-
-
-
-
-
-
-
-
