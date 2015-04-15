@@ -4,10 +4,12 @@
 var appInit = true,
     clickable = false,
     isTest = false,
+    testCounter = 0,
     visionsURL = "https://s3-us-west-2.amazonaws.com/avoision-augur/visions.json",
     meterPadding = 20,
     visionPadding = 20,
     visions = [];
+
 
 // ===========================
 // Init
@@ -24,11 +26,10 @@ $(document).ready(function() {
 // Device Ready           
 function onDeviceReady() {
     $(window).bind('orientationchange', orientationChange);
-    navigator.splashscreen.hide();
-
+    // navigator.splashscreen.hide();
+    
     if (checkConnection()) {
         $.mobile.changePage($('#adviceMain'));
-
     } else {
         $.mobile.changePage($('#connectionErrorScreen'));
     }
@@ -61,6 +62,7 @@ function orientationChange(e) {
         centerPreloader(false);
     };
 };
+
 
 // ===========================
 // Advice Main: Preloader
@@ -191,6 +193,21 @@ showInfoIcon = function() {
 // Advice Main: Visions
 // ===========================
 showNextVision = function() {
+    if (isTest) { 
+        testCounter++; 
+
+        if (testCounter == 5) {
+            testCounter = 0;
+            $('#infoIcon').fadeOut(500);
+            $('#vision').fadeTo(500, 0, function() {
+                $(this).hide();
+                clickable = false;
+                selectPreloaderText();
+            });
+            return;
+        };
+    };
+    
     if (clickable) {
         clickable = false;
     } else {
