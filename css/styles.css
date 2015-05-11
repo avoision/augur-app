@@ -110,8 +110,8 @@ Home Screen
 /* iPhone with no retina display */
 @media screen {
   #home {
-    background-image: url(../img/login.png);
-    background-position: center center;
+/*    background-image: url(../img/login.png);
+    background-position: center center;*/
   }
 }
 
